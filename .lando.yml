@@ -1,0 +1,45 @@
+name: lando-rails-example
+proxy:
+  appserver:
+    - rails.lndo.site:3000
+services:
+  appserver:
+    type: compose
+    services:
+      image: bitnami/rails:6.1.0-0
+      command: bundle exec rails server -b 0.0.0.0 -p 3000
+      user: root
+      environment:
+        GEM_HOME: /app/vendor
+        BUNDLE_DEFAULT_INSTALL_USERS_PATH: /app/vendor
+        DATABASE_HOST: database
+        DATABASE_NAME: rails_development
+        DATABASE_USER: rails
+        DATABASE_PASS: rails
+    build:
+      - bundle install
+      - yarn
+  database:
+    type: mariadb
+    creds:
+      database: rails_development
+      user: rails
+      password: rails
+  sidekiq:
+    type: compose
+    services:
+      image: bitnami/rails
+      command: bundle exec sidekiq
+tooling:
+  rails:
+    service: appserver
+  bundle:
+    service: appserver
+  rake:
+    service: appserver
+  yarn:
+    service: appserver
+  irb:
+    service: appserver
+  ruby:
+    service: appserver
