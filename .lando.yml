@@ -6,33 +6,31 @@ services:
   appserver:
     type: compose
     services:
-      image: bitnami/rails:6.1.0-0
-      command: bundle exec rails server -b 0.0.0.0 -p 3000
-      user: root
+      image: ruby:2.7.2
+      command: bundle exec rails server -b 0.0.0.0
+      ports:
+        - 3000
       environment:
-        GEM_HOME: /app/vendor
-        BUNDLE_DEFAULT_INSTALL_USERS_PATH: /app/vendor
-        DATABASE_HOST: database
-        DATABASE_NAME: rails_development
-        DATABASE_USER: rails
-        DATABASE_PASS: rails
+        DATABASE_USER: postgres
+        DATABASE_PASS: ""
+    build_as_root:
+      - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+      - echo "deb https://dl.yarnpkg.com/debian/ stable main" >> /etc/apt/sources.list.d/yarn.list
+      - apt -qq update
+      - apt -qq install -y nodejs yarn postgresql-client
     build:
-      - bundle install
-      - yarn
+      - bundle install --gemfile=/app/Gemfile
   database:
-    type: mariadb
+    type: postgres:12
+    portforward: true
     creds:
-      database: rails_development
-      user: rails
-      password: rails
-  sidekiq:
-    type: compose
-    services:
-      image: bitnami/rails
-      command: bundle exec sidekiq
+      database: ror_development
+      user: postgres
+      password: NO PASSWORD
 tooling:
   rails:
     service: appserver
+    cmd: bundle exec rails
   bundle:
     service: appserver
   rake:
