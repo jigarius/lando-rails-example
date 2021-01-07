@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 cd /app
-bundle exec rails server -d -p 3000
+bundle exec rails server -d -b 0.0.0.0 -p 3000

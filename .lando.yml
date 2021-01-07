@@ -6,20 +6,16 @@ services:
   appserver:
     type: compose
     services:
-      image: ruby:2.7.2
-      command: /app/lando/appserver/server.sh
+      image: ruby:2.7
+      command: "bundle exec rails server -b 0.0.0.0 -p 3000"
       ports:
         - '3000'
       environment:
         DATABASE_USER: postgres
         DATABASE_PASS: ''
         RAILS_ENV: development
-    build_as_root:
-      - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-      - echo "deb https://dl.yarnpkg.com/debian/ stable main" >> /etc/apt/sources.list.d/yarn.list
-      - apt -qq update
-      - apt -qq install -y nodejs yarn postgresql-client
-      - chmod +x /app/lando/appserver/server.sh
+    overrides:
+      build: ./lando/appserver
     build:
       - bundle install --gemfile=/app/Gemfile
   database:
@@ -40,6 +36,4 @@ tooling:
   yarn:
     service: appserver
   irb:
-    service: appserver
-  ruby:
     service: appserver
