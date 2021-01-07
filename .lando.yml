@@ -1,4 +1,4 @@
-name: lando-rails-example
+name: lando-rails
 proxy:
   appserver:
     - rails.lndo.site:3000
@@ -6,8 +6,10 @@ services:
   appserver:
     type: compose
     services:
-      image: ruby:2.7
-      command: "bundle exec rails server -b 0.0.0.0 -p 3000"
+      image: ruby:custom
+      # Running "rails server" only works for existing Rails apps.
+      # command: bundle exec rails server -b 0.0.0.0 -p 3000
+      command: "tail -f /dev/null"
       ports:
         - '3000'
       environment:
@@ -29,6 +31,9 @@ tooling:
   rails:
     service: appserver
     cmd: bundle exec rails
+  rails-server:
+    service: appserver
+    cmd: bundle exec rails server -d -b 0.0.0.0 -p 3000
   bundle:
     service: appserver
   rake:
