@@ -7,8 +7,8 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" >> /etc/apt/sources.list.d/yarn.list
 
 # Additional packages.
-RUN apt -qq update
-RUN apt -qqy install nodejs yarn postgresql-client
+RUN apt -qq update > /dev/null
+RUN apt -qqy install nodejs yarn postgresql-client > /dev/null
 
 # Entrypoint.
 COPY entrypoint.sh /usr/bin/
