@@ -8,6 +8,7 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" >> /etc/apt/sources.li
 
 # Additional packages.
 RUN apt -qq update > /dev/null
+# If you don't use Yarn, you can choose to not install it.
 RUN apt -qqy install nodejs yarn postgresql-client > /dev/null
 
 # Entrypoint.

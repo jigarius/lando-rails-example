@@ -6,7 +6,7 @@ services:
   appserver:
     type: compose
     services:
-      image: ruby:custom
+      image: ruby:rails
       # Running "rails server" only works for existing Rails apps.
       # command: bundle exec rails server -b 0.0.0.0 -p 3000
       command: "tail -f /dev/null"
