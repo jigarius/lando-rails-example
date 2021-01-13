@@ -2,13 +2,11 @@ FROM ruby:2.7
 
 WORKDIR /app
 
-# Yarn
+# Additional packages.
+# If you don't use Yarn, you can choose to not install it.
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" >> /etc/apt/sources.list.d/yarn.list
-
-# Additional packages.
 RUN apt -qq update > /dev/null
-# If you don't use Yarn, you can choose to not install it.
 RUN apt -qqy install nodejs yarn postgresql-client > /dev/null
 
 # Entrypoint.
