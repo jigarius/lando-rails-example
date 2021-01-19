@@ -8,7 +8,7 @@ services:
     services:
       image: ruby:rails
       # Running "rails server" only works for existing Rails apps.
-      # command: bundle exec rails server -b 0.0.0.0 -p 3000
+      # command: bundle exec rails server -b 0.0.0.0
       command: "tail -f /dev/null"
       ports:
         - '3000'
@@ -33,12 +33,8 @@ tooling:
     cmd: bundle exec rails
   rails-server:
     service: appserver
-    cmd: bundle exec rails server -d -b 0.0.0.0 -p 3000
+    cmd: bundle exec rails server -d -b 0.0.0.0
   bundle:
     service: appserver
   rake:
-    service: appserver
-  yarn:
-    service: appserver
-  irb:
     service: appserver
