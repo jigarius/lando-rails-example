@@ -3,7 +3,7 @@
 Planning to dockerize your Ruby on Rails dev environment? Here's how you can
 easily set up your Rails project with Lando.
 
-Read the full article on [Jigarius.com](https://jigarius.com/).
+Read the full article [Dockerize Ruby on Rails with Lando](https://jigarius.com/blog/ruby-on-rails-with-lando) on Jigarius.com.
 
 ## Usage
 
